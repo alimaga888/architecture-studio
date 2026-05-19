@@ -4,7 +4,6 @@
   margin: 0;
   padding: 0;
   z-index: 1;
-  overflow-x: hidden;
 }
 
 body.modal-open {
@@ -13,7 +12,6 @@ body.modal-open {
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 .hero {
