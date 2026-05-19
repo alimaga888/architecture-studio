@@ -1,0 +1,140 @@
+.faq-section {
+  padding: 120px 20px;
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-section::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(184, 0, 255, 0.05) 0%,
+    rgba(0, 240, 255, 0.02) 50%,
+    transparent 100%
+  );
+  animation: bgPulse 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bgPulse {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, 30px) scale(1.1);
+  }
+}
+
+.faq-section h2 {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+
+  /* Неоновый текст */
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  letter-spacing: 2px;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 20px 0;
+
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-bottom-color: var(--neon-cyan);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--text-primary);
+
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.faq-question:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.faq-arrow {
+  color: var(--neon-cyan);
+  font-size: 20px;
+  transition:
+    transform 0.3s ease,
+    text-shadow 0.3s ease;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.faq-item.active .faq-arrow {
+  transform: rotate(180deg);
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+}
+
+.faq-answer {
+  margin-top: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+
+  /* Плавное появление */
+  animation: slideDown 0.3s ease;
+
+  /* Неоновый левый край */
+  border-left: 2px solid var(--neon-cyan);
+  padding-left: 16px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-question {
+    font-size: 16px;
+  }
+
+  .faq-section {
+    padding: 80px 20px;
+  }
+}

@@ -1,0 +1,157 @@
+.order-section {
+  padding: 120px 20px;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0% var(--bg-secondary) 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-section::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 0, 110, 0.08) 0%,
+    rgba(0, 240, 255, 0.04) 50%,
+    transparent 100%
+  );
+  animation: bgPulse 12s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bgPulse {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, 40px) scale(1.1);
+  }
+}
+
+.order-section h2 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  letter-spacing: 2px;
+  animation: fadeInDown 0.8s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-section p {
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  letter-spacing: 1px;
+  animation: fadeInUp 0.8s ease 0.2s backwards;
+}
+
+.order-project-btn {
+  padding: 16px 40px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  color: var(--bg-primary);
+
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  font-weight: 700;
+
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.4),
+    0 0 40px rgba(184, 0, 255, 0.2);
+
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  animation: fadeInUp 0.8s ease 0.4s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-section::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.order-project-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.order-project-btn:hover {
+  box-shadow:
+    0 0 30px rgba(0, 240, 255, 0.6),
+    0 0 60px rgba(184, 0, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+.order-project-btn:active {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .order-section {
+    padding: 80px 20px;
+  }
+
+  .order-section h2 {
+    font-size: 32px;
+  }
+
+  .order-section p {
+    font-size: 16px;
+  }
+}

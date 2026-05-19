@@ -1,0 +1,97 @@
+.loader-overlay {
+  width: 300px;
+  height: 200px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(17, 17, 24, 0.95) 0%,
+    rgba(26, 26, 34, 0.98) 100%
+  );
+
+  border: 2px solid rgba(0, 240, 255, 0.2);
+  box-shadow:
+    0 0 30px rgba(0, 240, 255, 0.25),
+    0 0 60px rgba(184, 0, 255, 0.15);
+
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: fadeIn 0.4s ease forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loader-content {
+  text-align: center;
+  color: white;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(0, 240, 255, 0.1);
+  border-top: 3px solid var(--neon-cyan);
+  border-right: 3px solid var(--neon-purple);
+
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  will-change: transform;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadet-text {
+  font-size: 14px;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .loader-overlay {
+    width: 250px;
+    height: 170px;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border-width: 2px;
+  }
+
+  .loadet-text {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+}
