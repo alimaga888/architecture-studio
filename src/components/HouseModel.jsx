@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 function HouseModel({ modelUrl }) {
-  // ✅ Хуки вызываются ВСЕГДА в начале компонента
   const { scene } = useGLTF(modelUrl || "/models/homework.glb");
 
   useEffect(() => {

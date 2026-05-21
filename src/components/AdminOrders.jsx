@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase";
 import { useNavigate } from "react-router-dom";
 import "./AdminOrders.css";
+import AdminReviews from "./AdminReviews";
 
 function AdminOrders() {
   const [activeTab, setActiveTab] = useState("custom");
@@ -252,6 +253,7 @@ function AdminOrders() {
           </table>
         </div>
       )}
+      <AdminReviews />
     </div>
   );
 }

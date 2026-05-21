@@ -15,7 +15,7 @@ function Header() {
   const lastScrollY = useRef(0);
   const clickingMenu = useRef(false);
 
-  const sections = ["home", "projects", "order", "faq", "contacts"];
+  const sections = ["home", "projects", "order", "reviews", "faq", "contacts"];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,6 +112,13 @@ function Header() {
             onClick={() => scrollToSection("order")}
           >
             Индивидуальный проект
+          </a>
+
+          <a
+            className={active === "reviews" ? "active" : ""}
+            onClick={() => scrollToSection("reviews")}
+          >
+            Отзывы
           </a>
 
           <a

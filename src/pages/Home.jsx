@@ -6,6 +6,7 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import ProjectViewer from "../components/ProjectViewer";
+import Reviews from "../components/Reviews";
 
 function Home() {
   return (
@@ -35,6 +36,12 @@ function Home() {
       <Reveal>
         <section id="faq">
           <FAQ />
+        </section>
+      </Reveal>
+
+      <Reveal>
+        <section id="reviews">
+          <Reviews />
         </section>
       </Reveal>
 
