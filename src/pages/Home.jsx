@@ -1,22 +1,13 @@
-import HomeHero from "../components/HomeHero";
 import FeaturedProjects from "../components/FeaturedProjects";
-import ProjectPage from "../components/ProjectPage";
 import OrderSection from "../components/OrderSection";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
-import ProjectViewer from "../components/ProjectViewer";
 import Reviews from "../components/Reviews";
 
 function Home() {
   return (
     <>
-      <Reveal>
-        <section id="home">
-          <HomeHero />
-        </section>
-      </Reveal>
-
       <Reveal>
         <section id="projects">
           <FeaturedProjects />

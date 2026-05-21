@@ -1,18 +1,19 @@
 import { useGLTF } from "@react-three/drei";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 
 function HouseModel({ modelUrl }) {
   const { scene } = useGLTF(modelUrl || "/models/homework.glb");
+  const cloned = useMemo(() => scene.clone(true), [scene]);
 
   useEffect(() => {
-    if (!scene) return;
+    if (!cloned) return;
 
-    const box = new THREE.Box3().setFromObject(scene);
+    const box = new THREE.Box3().setFromObject(cloned);
     const center = box.getCenter(new THREE.Vector3());
-    scene.position.sub(center);
+    cloned.position.sub(center);
 
-    scene.traverse((child) => {
+    cloned.traverse((child) => {
       if (child.isMesh) {
         child.material.envMapIntensity = 1.5;
         child.material.needsUpdate = true;
@@ -20,9 +21,9 @@ function HouseModel({ modelUrl }) {
         child.receiveShadow = true;
       }
     });
-  }, [scene]);
+  }, [cloned]);
 
-  if (!scene) {
+  if (!cloned) {
     return (
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
@@ -31,7 +32,7 @@ function HouseModel({ modelUrl }) {
     );
   }
 
-  return <primitive object={scene} scale={1.5} position={[0, -0.5, 0]} />;
+  return <primitive object={cloned} scale={1.5} position={[0, -0.5, 0]} />;
 }
 
 // ✅ Preload модели для быстрой загрузки
