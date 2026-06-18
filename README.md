@@ -2,7 +2,25 @@
 
 ## 🚀 Frontend разработчик
 
-Специализируюсь на разработке современных веб-сайтов с использованием **React**, **Three.js** и **PostgreSql**.
+Специализируюсь на разработке современных веб-приложений с использованием **React**, **Three.js** и **PostgreSQL**.
+
+Целеустремлённый разработчик с опытом работы в команде. Быстро обучаюсь новым технологиям, умею решать сложные задачи и всегда довожу проекты до конца.
+
+---
+
+## 💼 Опыт работы
+
+**Frontend разработчик** | [СПИИРАН](http://www.spiiras.nw.ru/) (Санкт-Петербургский, научно-техническое бюро высоких технологий)
+
+Разработка веб-интерфейсов для научно-исследовательских проектов, работа с современным стеком технологий, участие в командной разработке.
+
+---
+
+## 🎓 Образование
+
+**Технический колледж управления и коммерции**  
+*(Академия инженерных технологий и управления)*  
+Специальность: Информационные системы и программирование
 
 ---
 
@@ -20,47 +38,41 @@
 - ⭐ Система отзывов с рейтингом
 - 📱 Адаптивный дизайн
 
-[🔗 Демо](localhost) | [📂 Код](https://github.com/alimaga888/architecture-studio)
+[📂 Код](https://github.com/alimaga888/architecture-studio)
 
 ---
 
-### [Тесты](https://github.com/alimaga888/Tests.git)
-Html, Css, JavaScript
+### 🍕 [FoodApp — Поиск рецептов](https://github.com/alimaga888/FoodApp)
+**Технологии:** React, Spoonacular API, CSS Modules, Vite
 
-Тесты параллакса, пример слайдера и тд.
-
-[🔗 Демо](localhost) | [📂 Код](https://github.com/alimaga888/Tests.git)
-
----
-
-### 📝 [ToDoApp](https://github.com/alimaga888/TodoApp.git)
-**Технологии:** React, LocalStorage
-
-Небольшое веб-приложение для управление задачами(блокнот).
-
-[🔗 Демо](localhost) | [📂 Код](https://github.com/alimaga888/TodoApp.git)
-
----
-
-### 📝 [FoodApp](https://github.com/alimaga888/FoodApp.git)
 Приложение для поиска и просмотра рецептов с использованием Spoonacular API.
 
-## ✨ Возможности
-
+**Возможности:**
 - 🔍 Поиск рецептов по названию
 - 📸 Фотографии блюд и ингредиентов
 - 📋 Детальная информация о рецепте
 - ⏱️ Время приготовления и калорийность
 - 👨‍🍳 Пошаговые инструкции
 
-## 🛠️ Технологии
+[📂 Код](https://github.com/alimaga888/FoodApp)
 
-- React
-- Spoonacular API
-- CSS Modules
-- Vite
+---
 
-[🔗 Демо](localhost) | [📂 Код](https://github.com/alimaga888/FoodApp.git)
+### 📝 [ToDoApp — Менеджер задач](https://github.com/alimaga888/TodoApp)
+**Технологии:** React, LocalStorage
+
+Веб-приложение для управления задачами с сохранением в LocalStorage.
+
+[📂 Код](https://github.com/alimaga888/TodoApp)
+
+---
+
+### 🎨 [Tests — Эксперименты с UI](https://github.com/alimaga888/Tests)
+**Технологии:** HTML, CSS, JavaScript
+
+Коллекция экспериментов: параллакс-эффекты, слайдеры, анимации и другие UI-компоненты.
+
+[📂 Код](https://github.com/alimaga888/Tests)
 
 ---
 
@@ -72,6 +84,18 @@ Html, Css, JavaScript
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?logo=postgresql&logoColor=white&style=flat)
 ![Supabase](https://img.shields.io/badge/-Supabase-3ECF8E?logo=supabase&logoColor=white&style=flat)
 ![Git](https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white&style=flat)
+![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=flat)
+![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white&style=flat)
+
+---
+
+## 💪 Личные качества
+
+- ✅ Целеустремлённость и ответственность
+- ✅ Умение работать в команде
+- ✅ Быстрая обучаемость новым технологиям
+- ✅ Внимание к деталям и качеству кода
+- ✅ Навыки решения сложных задач
 
 ---
 
@@ -79,8 +103,8 @@ Html, Css, JavaScript
 
 [![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?logo=telegram&logoColor=white)](https://t.me/MANIAC111)
 [![Email](https://img.shields.io/badge/-Email-D14836?logo=gmail&logoColor=white)](mailto:magomedrasul.magomedov1995@gmail.com)
+[![Phone](https://img.shields.io/badge/-Phone-00C300?logo=phone&logoColor=white)](tel:+79052209048)
 [![hh.ru](https://img.shields.io/badge/-hh.ru-D6001C?logo=headhunter&logoColor=white)](https://spb.hh.ru/resume/d5ba5e35ff10a536670039ed1f633534656844)
-[![Telephone](+79052209048)
 
 ---
 
