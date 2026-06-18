@@ -110,6 +110,4 @@
 
 ## 📊 GitHub Статистика
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=alimaga888&show_icons=true&theme=tokyonight)
-
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=alimaga888&layout=compact&theme=tokyonight)
