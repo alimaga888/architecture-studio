@@ -5,7 +5,7 @@ import ProjectGallery from "./ProjectGallery";
 import "./FeaturedProjects.css";
 import OrderFromProject from "./OrderFromProject";
 import AddProjectForm from "./AddProjectForm";
-import { calculateProjectPrice, formatPrice } from "../utils/priceCalculator";
+import { formatPrice } from "../utils/priceCalculator";
 import { useAuth } from "./AuthContext";
 
 function FeaturedProjects() {
@@ -64,9 +64,9 @@ function FeaturedProjects() {
     ? JSON.parse(selectedProject.gallery_images)
     : [];
 
-  const projectPrice = selectedProject
-    ? calculateProjectPrice(selectedProject)
-    : 0;
+  // const projectPrice = selectedProject
+  //   ? calculateProjectPrice(selectedProject)
+  //   : 0;
 
   const handleProjectAdded = () => {
     setShowAddProject(false);
@@ -188,9 +188,9 @@ function FeaturedProjects() {
                 <h2>{selectedProject.title}</h2>
 
                 <div className="project-price">
-                  <span className="price-label">Примерная стоимость:</span>
+                  <span className="price-label">Cтоимость:</span>
                   <span className="price-value">
-                    {formatPrice(projectPrice)}
+                    {formatPrice(selectedProject.Price || 0)}
                   </span>
                 </div>
 

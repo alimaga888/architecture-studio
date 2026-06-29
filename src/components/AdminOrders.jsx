@@ -131,7 +131,7 @@ function AdminOrders() {
   return (
     <div className="admin-page">
       <div className="admin-header">
-        <h1>📊 Панель администратора</h1>
+        <h1>Панель администратора</h1>
         <button className="back-btn" onClick={() => navigate("/profile")}>
           ← Назад в профиль
         </button>

@@ -1,4 +1,4 @@
-const BASE_PRICE_PER_M2 = 50000;
+const BASE_PRICE_PER_M2 = 20;
 
 export const calculateProjectPrice = (project) => {
   if (!project || !project.area) return 0;
@@ -10,7 +10,7 @@ export const calculateProjectPrice = (project) => {
   }
 
   if (project.bedrooms) {
-    totalPrice += project.bedrooms * 50000;
+    totalPrice += project.bedrooms * 200;
   }
 
   return Math.round(totalPrice);
@@ -29,24 +29,28 @@ export const calculateCustomProjectPrice = (form) => {
   let totalPrice = area * BASE_PRICE_PER_M2;
 
   if (form.floors === "Двухэтажный") {
-    totalPrice *= 1.15;
+    totalPrice *= 1.1;
   }
 
   if (form.bedrooms && form.bedrooms !== "") {
     const bedroomCount = parseInt(form.bedrooms);
-    totalPrice += bedroomCount * 50000;
+    totalPrice += bedroomCount * 200;
   }
 
   const materialBonuses = {
-    Кирпич: 1.1, // +10%
+    Кирпич: 1.05, // ИЗМЕНЕНО: +5%
     Газобетон: 1.0, // базовая цена
-    Дерево: 1.2, // +20%
-    Каркасный: 0.9, // -10%
+    Дерево: 1.1, // ИЗМЕНЕНО: +10%
+    Каркасный: 0.95, // ИЗМЕНЕНО: -5%
   };
 
-  if (form.garage) totalPrice += 200000;
-  if (form.terrace) totalPrice += 150000;
-  if (form.mansard) totalPrice += 180000;
+  if (form.material && materialBonuses[form.material]) {
+    totalPrice *= materialBonuses[form.material];
+  }
+
+  if (form.garage) totalPrice += 400;
+  if (form.terrace) totalPrice += 300;
+  if (form.mansard) totalPrice += 350;
 
   return Math.round(totalPrice);
 };
