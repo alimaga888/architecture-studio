@@ -21,7 +21,7 @@ function MovingLight() {
   return (
     <directionalLight
       ref={lightRef}
-      intensity={2}
+      intensity={0.8}
       position={[5, 10, 5]}
       castShadow
     />
@@ -74,27 +74,29 @@ function HomeHero() {
 
   return (
     <section id="home" className="hero">
-      <Canvas camera={{ position: [0, 2, 4], fov: 45 }}>
-        <color attach="background" args={["#f3f3f3"]} />
-        <ambientLight intensity={1.2} />
+      <div className="hero-canvas-wrapper">
+        <Canvas camera={{ position: [3, 2, 3], fov: 50 }}>
+          <color attach="background" args={["#0a0a0f"]} />
+          <ambientLight intensity={0.8} />
 
-        <MovingLight />
+          <MovingLight />
 
-        <Environment preset="sunset" />
-        <Suspense fallback={<ModelLoader />}>
-          <RotatingModel modelUrl="/models/homework.glb" />
-        </Suspense>
+          <Environment preset="night" />
+          <Suspense fallback={<ModelLoader />}>
+            <RotatingModel modelUrl="/models/homework.glb" />
+          </Suspense>
 
-        {/* <OrbitControls
+          {/* <OrbitControls
           enableZoom={false}
           enablePan={false}
           enableRotate={false}
         /> */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.5, 0]}>
-          <planeGeometry args={[100, 100]} />
-          <meshStandardMaterial color="#e8e8e8" />
-        </mesh>
-      </Canvas>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.5, 0]}>
+            <planeGeometry args={[100, 100]} />
+            <meshStandardMaterial color="#0d0d12" />
+          </mesh>
+        </Canvas>
+      </div>
       <div className="hero-overlay" />
 
       <div className="hero-content">
