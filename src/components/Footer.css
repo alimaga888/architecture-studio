@@ -53,7 +53,7 @@
 }
 
 .footer-col h4 {
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   font-size: 16px;
   color: var(--neon-cyan);
   text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);

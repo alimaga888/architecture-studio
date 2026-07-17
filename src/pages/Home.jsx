@@ -36,11 +36,9 @@ function Home() {
         </section>
       </Reveal>
 
-      <Reveal>
-        <section id="contacts">
-          <Footer />
-        </section>
-      </Reveal>
+      <footer id="contacts">
+        <Footer />
+      </footer>
     </>
   );
 }

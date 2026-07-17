@@ -16,7 +16,7 @@ html {
 
 .hero {
   position: relative;
-  height: 100vh;
+  /* height: 100vh; */
   background: url("https://images.unsplash.com/photo-1503387762-592deb58ef4e")
     center / cover no-repeat;
 
@@ -115,11 +115,23 @@ html {
 
 .reveal {
   opacity: 0;
-  transform: translateY(60px);
+  /* transform: translateY(60px); */
   transition: 0.8s ease;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Анимация только при появлении */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
