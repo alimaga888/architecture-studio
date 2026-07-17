@@ -33,7 +33,7 @@ function PremiumLoader() {
 function ProjectViewer({ modelUrl }) {
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      <Canvas camera={{ position: [5, 3, 5], fov: 45 }}>
+      <Canvas camera={{ position: [3, 2, 3], fov: 10 }}>
         {/*Свет*/}
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 10, 5]} intensity={1.2} />

@@ -230,10 +230,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 40px;
   z-index: 1000;
 
   border: 1px solid rgba(0, 240, 255, 0.1);
   animation: modalFadeIn 0.4s ease;
+  overflow-y: auto;
 }
 
 @keyframes modalFadeIn {
@@ -248,7 +250,11 @@
 .modal-content {
   display: flex;
   width: 90%;
-  height: 90%;
+  max-width: 1600px;
+  height: auto;
+  min-height: 80vh;
+  max-height: calc(100vh - 80vh);
+
   border-radius: 12px;
   overflow: hidden;
 
@@ -266,6 +272,7 @@
   );
 
   animation: modalZoomIn 0.35s ease;
+  position: relative;
 }
 
 @keyframes modalZoomIn {

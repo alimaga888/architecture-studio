@@ -1,59 +1,94 @@
-const BASE_PRICE_PER_M2 = 20;
+// ============= БАЗОВЫЕ ЦЕНЫ =============
+
+const BASE_PRICES = {
+  "до 100 м²": 80000,
+  "до 150 м²": 120000,
+  "150–200 м²": 180000,
+  "200+ м²": 250000,
+};
+
+const FLOOR_MULTIPLIERS = {
+  1: 1.0, // без доплаты
+  2: 1.15, // +15%
+  3: 1.25, // +25%
+  "4+": 1.35, // +35%
+};
+
+const MATERIAL_MULTIPLIERS = {
+  Кирпич: 1.05, // +5%
+  Газобетон: 1.0, // базовая цена
+  Дерево: 1.1, // +10%
+  Каркасный: 0.95, // -5%
+};
+
+const ADDITIONAL_FEATURES = {
+  garage: 15000, // гараж
+  terrace: 10000, // терраса
+  mansard: 12000, // мансарда
+};
+
+// ============= РАСЧЁТ ЦЕНЫ ГОТОВОГО ПРОЕКТА =============
 
 export const calculateProjectPrice = (project) => {
   if (!project || !project.area) return 0;
 
-  let totalPrice = project.area * BASE_PRICE_PER_M2;
+  // Определяем базовую цену по площади
+  let basePrice = 40000;
 
-  if (project.floors && project.floors > 1) {
-    totalPrice *= 1 + (project.floors - 1) * 0.1;
+  if (project.area <= 100) {
+    basePrice = 80000;
+  } else if (project.area <= 150) {
+    basePrice = 120000;
+  } else if (project.area <= 200) {
+    basePrice = 180000;
+  } else {
+    basePrice = 250000;
   }
 
-  if (project.bedrooms) {
-    totalPrice += project.bedrooms * 200;
+  let totalPrice = basePrice;
+
+  // Умножаем на этажность
+  if (project.floors && project.floors > 1) {
+    const floorKey = project.floors > 3 ? "4+" : project.floors.toString();
+    totalPrice *= FLOOR_MULTIPLIERS[floorKey] || 1.0;
   }
 
   return Math.round(totalPrice);
 };
+
+// ============= РАСЧЁТ ИНДИВИДУАЛЬНОГО ПРОЕКТА =============
 
 export const calculateCustomProjectPrice = (form) => {
-  const areaRanges = {
-    "до 100 м²": 75,
-    "до 150 м²": 125,
-    "150–200 м²": 175,
-    "200+ м²": 300,
-  };
+  // Базовая цена по площади
+  let totalPrice = BASE_PRICES[form.area_range] || 40000;
 
-  const area = areaRanges[form.area_range] || 150;
-
-  let totalPrice = area * BASE_PRICE_PER_M2;
-
-  if (form.floors === "Двухэтажный") {
-    totalPrice *= 1.1;
+  // Умножаем на этажность
+  if (form.floors) {
+    totalPrice *= FLOOR_MULTIPLIERS[form.floors] || 1.0;
   }
 
+  // Умножаем на материал
+  if (form.material && MATERIAL_MULTIPLIERS[form.material]) {
+    totalPrice *= MATERIAL_MULTIPLIERS[form.material];
+  }
+
+  // Добавляем доп. опции
+  if (form.garage) totalPrice += ADDITIONAL_FEATURES.garage;
+  if (form.terrace) totalPrice += ADDITIONAL_FEATURES.terrace;
+  if (form.mansard) totalPrice += ADDITIONAL_FEATURES.mansard;
+
+  // Доплата за спальни (опционально, если нужно)
   if (form.bedrooms && form.bedrooms !== "") {
     const bedroomCount = parseInt(form.bedrooms);
-    totalPrice += bedroomCount * 200;
+    if (bedroomCount > 3) {
+      totalPrice += (bedroomCount - 3) * 5000; // +5000₽ за каждую доп. спальню
+    }
   }
-
-  const materialBonuses = {
-    Кирпич: 1.05, // ИЗМЕНЕНО: +5%
-    Газобетон: 1.0, // базовая цена
-    Дерево: 1.1, // ИЗМЕНЕНО: +10%
-    Каркасный: 0.95, // ИЗМЕНЕНО: -5%
-  };
-
-  if (form.material && materialBonuses[form.material]) {
-    totalPrice *= materialBonuses[form.material];
-  }
-
-  if (form.garage) totalPrice += 400;
-  if (form.terrace) totalPrice += 300;
-  if (form.mansard) totalPrice += 350;
 
   return Math.round(totalPrice);
 };
+
+// ============= ФОРМАТИРОВАНИЕ ЦЕНЫ =============
 
 export const formatPrice = (price) => {
   return new Intl.NumberFormat("ru-RU", {

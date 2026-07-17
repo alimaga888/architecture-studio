@@ -21,6 +21,23 @@ function FeaturedProjects() {
   const [showGallery, setShowGallery] = useState(false);
   const [showAddProject, setShowAddProject] = useState(false);
 
+  // useEffect(() => {
+  //   if (selectedProject) {
+  //     const scrollY = window.scrollY;
+
+  //     document.body.style.position = "fixed";
+  //     document.body.style.top = `-${scrollY}px`;
+  //     document.body.style.width = "100%";
+  //   } else {
+  //     const scrollY = document.body.style.top;
+  //     document.body.style.position = "";
+  //     document.body.style.top = "";
+  //     document.body.style.width = "";
+
+  //     window.scrollTo(0, parseInt(scrollY || "0") * -1);
+  //   }
+  // }, [selectedProject]);
+
   useEffect(() => {
     const loadProjects = async () => {
       const { data } = await supabase.from("projects").select(
@@ -167,14 +184,14 @@ function FeaturedProjects() {
 
       {selectedProject && (
         <div className="project-modal" onClick={() => setSelectedProject(null)}>
-          <button
-            className="close-btn"
-            onClick={() => setSelectedProject(null)}
-          >
-            ✕
-          </button>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {/* ✅ СЛАЙД 1: 3D МОДЕЛЬ */}
+            <button
+              className="close-btn"
+              onClick={() => setSelectedProject(null)}
+            >
+              ✕
+            </button>
             <div
               className={`modal-slide modal-slide--3d ${
                 !showGallery ? "active" : ""

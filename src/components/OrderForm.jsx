@@ -164,8 +164,10 @@ function OrderForm({ close }) {
           {/* Основные параметры */}
           <select name="floors" onChange={handleChange} required>
             <option value="">Этажность</option>
-            <option>Одноэтажный</option>
-            <option>Двухэтажный</option>
+            <option value="1">1 этаж</option>
+            <option value="2">2 этажа</option>
+            <option value="3">3 этажа</option>
+            <option value="4+">4+ этажа</option>
           </select>
 
           <select name="area_range" onChange={handleChange} required>
