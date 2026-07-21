@@ -100,8 +100,14 @@ function HomeHero() {
       <div className="hero-overlay" />
 
       <div className="hero-content">
-        <h1>Архитектура создающая пространство</h1>
-        <p>Современные жилые проекты и частные дома</p>
+        <h1>Alyazhe</h1>
+        <p className="hero-subtitle-main">
+          архитектурное бюро с проектами в России, США и ОАЭ.
+        </p>
+        <p className="hero-subtitle-secondary">
+          Мы проектируем жилые дома, коммерческие и общественные здания,
+          благоустройство — более 200 реализованных объектов с 2020 года.
+        </p>
         <button className="hero-button" onClick={scrollToOrder}>
           Заказать индивидуальный проект
         </button>
