@@ -108,6 +108,30 @@
   box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
 }
 
+.review-photo-preview {
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  max-width: 300px;
+  transition: all 0.3s ease;
+}
+
+.review-photo-preview:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  transform: scale(1.02);
+}
+
+.review-photo-preview img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .pending-review-card {
     flex-direction: column;

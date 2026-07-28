@@ -336,3 +336,154 @@
     font-size: 28px;
   }
 }
+
+/* ✅ КНОПКА ПОКАЗАТЬ/СКРЫТЬ ОТЗЫВЫ */
+.toggle-reviews-btn {
+  display: block;
+  margin: 20px auto 40px;
+  padding: 12px 30px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.toggle-reviews-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* ✅ ЗАГРУЗКА ФОТО */
+.photo-upload-block {
+  margin-bottom: 20px;
+}
+
+.photo-upload-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.photo-upload-block input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-upload-block input[type="file"]:hover {
+  border-color: var(--neon-cyan);
+}
+
+.uploading-text {
+  color: var(--neon-cyan);
+  font-size: 13px;
+  margin-top: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.photo-preview {
+  margin-top: 15px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.photo-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-preview button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  background: rgba(255, 0, 110, 0.9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.photo-preview button:hover {
+  background: rgba(255, 0, 110, 1);
+  box-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+}
+
+/* ✅ АВАТАРКА ПОЛЬЗОВАТЕЛЯ */
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--bg-primary);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  overflow: hidden;
+}
+
+.author-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ✅ ФОТО ПРОЕКТА В ОТЗЫВЕ */
+.review-project-photo {
+  margin-top: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.review-project-photo:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  transform: scale(1.02);
+}
+
+.review-project-photo img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.review-project-photo:hover img {
+  filter: brightness(1.1);
+}

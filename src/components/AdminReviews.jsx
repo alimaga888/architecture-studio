@@ -99,6 +99,19 @@ function AdminReviews() {
                 <h3>{review.user_name}</h3>
                 <div className="rating">{renderStars(review.rating)}</div>
                 <p>{review.comment}</p>
+
+                {review.project_photo_url && (
+                  <div className="review-photo-preview">
+                    <img
+                      src={review.project_photo_url}
+                      alt="Фото проекта"
+                      onClick={() =>
+                        window.open(review.project_photo_url, "_blank")
+                      }
+                    />
+                  </div>
+                )}
+
                 <span className="date">
                   {new Date(review.created_at).toLocaleDateString("ru-RU")}
                 </span>

@@ -32,8 +32,8 @@ function Footer() {
 
         <div className="footer-col">
           <h4>Контакты</h4>
-          <p>Email: studio@mail.com</p>
-          <p>Телефон: +7 999 123 45 67</p>
+          <p>Email: aligadzi.magomedov@gmail.com</p>
+          <p>Телефон: +7 969 128 69 88</p>
           <p>Город: Москва</p>
         </div>
 
