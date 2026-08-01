@@ -2,26 +2,21 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../components/AuthContext";
 import { supabase } from "../supabase";
 import { useNavigate } from "react-router-dom";
+import AvatarUpload from "../components/AvatarUpload";
 import "./Profile.css";
 
 function Profile() {
-  const { user, profile, signOut, isAdmin } = useAuth(); // ✅ Деструктуризация
+  const { user, profile, signOut, isAdmin, refreshProfile } = useAuth(); // ✅ refreshProfile
   const [customOrders, setCustomOrders] = useState([]);
   const [catalogOrders, setCatalogOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  // ✅ ПРОВЕРКА ЗДЕСЬ:
-  console.log("USER:", user);
-  console.log("PROFILE:", profile); // Будет null пока грузится
-  console.log("IS ADMIN:", isAdmin());
 
   useEffect(() => {
     if (!user) {
       navigate("/auth");
       return;
     }
-
     loadOrders();
   }, [user, navigate]);
 
@@ -48,6 +43,11 @@ function Profile() {
     navigate("/");
   };
 
+  // ✅ После загрузки аватара обновляем профиль в контексте
+  const handleAvatarUpdate = async () => {
+    await refreshProfile();
+  };
+
   if (loading) {
     return <div className="profile-page">Загрузка...</div>;
   }
@@ -71,12 +71,21 @@ function Profile() {
         </button>
       </div>
 
+      {/* ✅ ЗАГРУЗКА АВАТАРА */}
+      <AvatarUpload
+        userId={user.id}
+        userName={profile?.full_name || user.email}
+        currentAvatar={profile?.avatar_url || null}
+        onUploadSuccess={handleAvatarUpdate}
+      />
+
       {isAdmin() && (
         <button className="admin-panel-btn" onClick={() => navigate("/admin")}>
           📊 Панель администратора
         </button>
       )}
 
+      {/* ⬇️ ОСТАЛЬНОЙ КОД БЕЗ ИЗМЕНЕНИЙ (блок orders-section) */}
       <div className="orders-section">
         <h2>Мои заказы ({totalOrders})</h2>
 
@@ -87,7 +96,6 @@ function Profile() {
           </div>
         ) : (
           <>
-            {/* ✅ ИНДИВИДУАЛЬНЫЕ ЗАКАЗЫ */}
             {customOrders.length > 0 && (
               <div className="order-group">
                 <h3 className="order-group-title">
@@ -102,7 +110,6 @@ function Profile() {
                           {new Date(order.created_at).toLocaleDateString()}
                         </span>
                       </div>
-
                       <div className="order-details">
                         <p>
                           <strong>Площадь:</strong> {order.area_range}
@@ -126,7 +133,6 @@ function Profile() {
               </div>
             )}
 
-            {/* ✅ ЗАКАЗЫ ГОТОВЫХ ПРОЕКТОВ */}
             {catalogOrders.length > 0 && (
               <div className="order-group">
                 <h3 className="order-group-title">
@@ -141,7 +147,6 @@ function Profile() {
                           {new Date(order.created_at).toLocaleDateString()}
                         </span>
                       </div>
-
                       <div className="order-details">
                         <p>
                           <strong>ID заказа:</strong> #{order.id.slice(0, 8)}

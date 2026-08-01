@@ -27,7 +27,7 @@ function Reviews() {
 
   const loadReviews = async () => {
     try {
-      // ✅ Сначала загружаем отзывы
+      // ✅ Загружаем отзывы
       const { data: reviewsData, error: reviewsError } = await supabase
         .from("reviews")
         .select("*")
@@ -40,7 +40,7 @@ function Reviews() {
         return;
       }
 
-      // ✅ Загружаем профили пользователей (только для тех, у кого есть user_id)
+      // ✅ Загружаем профили ТОЛЬКО для тех отзывов, у кого есть user_id
       const userIds = reviewsData
         .map((r) => r.user_id)
         .filter((id) => id !== null && id !== undefined);
@@ -258,9 +258,9 @@ function Reviews() {
                   <div className="review-author">
                     {/* ✅ АВАТАРКА ПОЛЬЗОВАТЕЛЯ */}
                     <div className="author-avatar">
-                      {review.profiles?.avatar_url ? (
+                      {review.profile?.avatar_url ? (
                         <img
-                          src={review.profiles.avatar_url}
+                          src={review.profile.avatar_url}
                           alt={review.user_name}
                         />
                       ) : (

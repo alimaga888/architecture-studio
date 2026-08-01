@@ -11,7 +11,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Получаем текущего пользователя
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -21,7 +20,6 @@ export function AuthProvider({ children }) {
       }
     });
 
-    // Слушаем изменения авторизации
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -48,6 +46,17 @@ export function AuthProvider({ children }) {
     setLoading(false);
   };
 
+  // ✅ НОВОЕ: обновление профиля вручную (после смены аватара)
+  const refreshProfile = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+    setProfile(data);
+  };
+
   const signUp = async (email, password, fullName) => {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -60,7 +69,6 @@ export function AuthProvider({ children }) {
     });
 
     if (!error && data.user) {
-      // Обновляем имя в профиле
       await supabase
         .from("profiles")
         .update({ full_name: fullName })
@@ -93,6 +101,7 @@ export function AuthProvider({ children }) {
     signIn,
     signOut,
     isAdmin,
+    refreshProfile, // ✅ НОВОЕ
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -11,7 +11,6 @@ function AdminReviews() {
   }, []);
 
   const loadPendingReviews = async () => {
-    // ✅ Используем service role для обхода RLS (только для админов!)
     const { data: userData } = await supabase.auth.getUser();
 
     if (!userData.user) {
@@ -31,20 +30,39 @@ function AdminReviews() {
       return;
     }
 
-    // ✅ Запрос БЕЗ ФИЛЬТРОВ (админ видит всё)
-    const { data, error } = await supabase
+    // ✅ Загружаем отзывы на модерации
+    const { data: reviewsData, error } = await supabase
       .from("reviews")
       .select("*")
       .eq("is_approved", false)
       .order("created_at", { ascending: false });
 
-    console.log("Pending reviews:", data); // ✅ Для отладки
-    console.log("Error:", error); // ✅ Для отладки
-
-    if (!error) {
-      setPendingReviews(data || []);
-    } else {
+    if (error) {
       console.error("Ошибка загрузки отзывов:", error);
+      setLoading(false);
+      return;
+    }
+
+    // ✅ Загружаем профили для отзывов с user_id
+    const userIds = reviewsData
+      .map((r) => r.user_id)
+      .filter((id) => id !== null && id !== undefined);
+
+    if (userIds.length > 0) {
+      const { data: profilesData } = await supabase
+        .from("profiles")
+        .select("id, avatar_url, full_name")
+        .in("id", userIds);
+
+      // Объединяем данные
+      const reviewsWithProfiles = reviewsData.map((review) => ({
+        ...review,
+        profile: profilesData?.find((p) => p.id === review.user_id) || null,
+      }));
+
+      setPendingReviews(reviewsWithProfiles);
+    } else {
+      setPendingReviews(reviewsData);
     }
 
     setLoading(false);
@@ -96,7 +114,70 @@ function AdminReviews() {
           {pendingReviews.map((review) => (
             <div key={review.id} className="pending-review-card">
               <div className="review-info">
-                <h3>{review.user_name}</h3>
+                {/* ✅ БЛОК С АВАТАРКОЙ И ИМЕНЕМ */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    marginBottom: "15px",
+                  }}
+                >
+                  <div
+                    className="author-avatar"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      background:
+                        "linear-gradient(135deg, var(--neon-cyan), var(--neon-purple))",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "24px",
+                      fontWeight: "700",
+                      color: "var(--bg-primary)",
+                      boxShadow: "0 0 15px rgba(0, 240, 255, 0.4)",
+                    }}
+                  >
+                    {review.profile?.avatar_url ? (
+                      <img
+                        src={review.profile.avatar_url}
+                        alt={review.user_name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <span>{review.user_name.charAt(0).toUpperCase()}</span>
+                    )}
+                  </div>
+
+                  <div>
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontSize: "16px",
+                        color: "var(--neon-cyan)",
+                      }}
+                    >
+                      {review.profile?.full_name || review.user_name}
+                    </h3>
+                    <span
+                      className="date"
+                      style={{
+                        fontSize: "12px",
+                        color: "var(--text-tertiary)",
+                      }}
+                    >
+                      {new Date(review.created_at).toLocaleDateString("ru-RU")}
+                    </span>
+                  </div>
+                </div>
+
                 <div className="rating">{renderStars(review.rating)}</div>
                 <p>{review.comment}</p>
 
@@ -111,10 +192,6 @@ function AdminReviews() {
                     />
                   </div>
                 )}
-
-                <span className="date">
-                  {new Date(review.created_at).toLocaleDateString("ru-RU")}
-                </span>
               </div>
 
               <div className="review-actions">

@@ -442,6 +442,9 @@ section {
 }
 
 .profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   padding: 8px 20px;
   background: rgba(0, 240, 255, 0.1);
   border: 1px solid var(--neon-cyan);

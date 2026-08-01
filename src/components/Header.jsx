@@ -135,7 +135,23 @@ function Header() {
               className="profile-btn"
               onClick={() => navigate("/profile")}
             >
-              👤 {profile?.full_name || "Профиль"}
+              {profile?.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt="avatar"
+                  style={{
+                    width: "24px",
+                    height: "24px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    marginRight: "8px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              ) : (
+                "👤 "
+              )}
+              {profile?.full_name || "Профиль"}
             </button>
           ) : (
             <>

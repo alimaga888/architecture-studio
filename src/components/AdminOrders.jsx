@@ -193,12 +193,56 @@ function AdminOrders() {
                     <td>{order.terrace ? "✅" : "❌"}</td>
                     <td>{order.mansard ? "✅" : "❌"}</td>
                     <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                    {/* ✅ НОВОЕ: Колонка с файлами */}
+                    <td>
+                      {order.attached_files &&
+                      order.attached_files.length > 0 ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "5px",
+                          }}
+                        >
+                          {order.attached_files.map((fileUrl, idx) => {
+                            const fileName = fileUrl
+                              .split("/")
+                              .pop()
+                              .split("_")
+                              .slice(1)
+                              .join("_")
+                              .split("?")[0];
+                            return (
+                              <a
+                                key={idx}
+                                href={fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  color: "var(--neon-cyan)",
+                                  textDecoration: "none",
+                                  fontSize: "12px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "4px",
+                                }}
+                              >
+                                📎 {fileName.substring(0, 20)}
+                                {fileName.length > 20 ? "..." : ""}
+                              </a>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <span style={{ color: "var(--text-tertiary)" }}>—</span>
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td
-                    colSpan="15"
+                    colSpan="16"
                     style={{ textAlign: "center", color: "#aaa" }}
                   >
                     Заказов нет
@@ -222,6 +266,7 @@ function AdminOrders() {
                 <th>Телефон</th>
                 <th>Telegram</th>
                 <th>Дата</th>
+                <th>Файлы</th>
               </tr>
             </thead>
             <tbody>

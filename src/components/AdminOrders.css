@@ -198,3 +198,22 @@ td {
 tr:hover {
   background: rgba(0, 240, 255, 0.05);
 }
+
+td a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+td a:hover {
+  color: var(--neon-purple);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+td:last-child {
+  min-width: 200px;
+  max-width: 250px;
+}
