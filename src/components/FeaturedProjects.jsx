@@ -162,12 +162,18 @@ function FeaturedProjects() {
                 <img src={project.cover_image} alt={project.title} />
               </div>
 
+              {project.model_url ? (
+                <div className="project-badge project-badge--3d">🎮 3D</div>
+              ) : (
+                <div className="project-badge project-badge--photo">
+                  📷 ФОТО
+                </div>
+              )}
+
               <div className="card-info">
                 <h3>{project.title}</h3>
                 <p>{project.location}</p>
-                <span>
-                  {project.year} • {project.area} м²
-                </span>
+                <span>{project.area} м²</span>
               </div>
             </div>
           ))}
@@ -198,7 +204,11 @@ function FeaturedProjects() {
               }`}
             >
               <div className="viewer">
-                <ProjectViewer modelUrl={selectedProject.model_url} />
+                <ProjectViewer
+                  modelUrl={selectedProject.model_url}
+                  coverImage={selectedProject.cover_image}
+                  projectTitle={selectedProject.title}
+                />
               </div>
 
               <div className="project-details">
@@ -217,9 +227,9 @@ function FeaturedProjects() {
                   <li>
                     📍 <strong>Локация:</strong> {selectedProject.location}
                   </li>
-                  <li>
+                  {/* <li>
                     📅 <strong>Год:</strong> {selectedProject.year}
-                  </li>
+                  </li> */}
                   <li>
                     📐 <strong>Площадь:</strong> {selectedProject.area} м²
                   </li>

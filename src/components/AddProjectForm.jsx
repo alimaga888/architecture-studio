@@ -194,7 +194,6 @@ function AddProjectForm({ close, onProjectAdded }) {
             placeholder="URL 3D модели (glb файл)"
             value={form.model_url}
             onChange={handleChange}
-            required
           />
 
           <textarea

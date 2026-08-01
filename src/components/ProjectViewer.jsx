@@ -30,7 +30,58 @@ function PremiumLoader() {
   );
 }
 
-function ProjectViewer({ modelUrl }) {
+function ProjectViewer({ modelUrl, coverImage, projectTitle }) {
+  if (!modelUrl) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "var(--bg-secondary)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src={coverImage}
+          alt={projectTitle || "Проект"}
+          style={{
+            maxWidth: "90%",
+            maxHeight: "90%",
+            width: "auto",
+            height: "auto",
+            objectFit: "contain",
+            borderRadius: "8px",
+            boxShadow: "0 0 30px rgba(0, 240, 255, 0.2)",
+          }}
+        />
+
+        <div
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "10px 20px",
+            background: "rgba(0, 240, 255, 0.1)",
+            border: "1px solid var(--neon-cyan)",
+            borderRadius: "6px",
+            color: "var(--neon-cyan)",
+            fontSize: "13px",
+            fontWeight: "600",
+            letterSpacing: "1px",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          3D модель недоступна
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Canvas camera={{ position: [3, 2, 3], fov: 10 }}>
