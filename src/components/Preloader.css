@@ -55,7 +55,7 @@
   font-size: 130px;
   font-weight: 700;
   letter-spacing: 10px;
-  font-family: "Impact", "Arial Black", sans-serif;
+  font-family: "Quicksand", sans-serif;
 
   /* Внешний неоновый контур */
   color: var(--neon-cyan);
@@ -70,7 +70,7 @@
   font-size: 130px;
   font-weight: 700;
   letter-spacing: 10px;
-  font-family: "Impact", "Arial Black", sans-serif;
+  font-family: "Quicksand", sans-serif;
   fill: none;
   stroke: rgba(0, 240, 255, 0.2);
   stroke-width: 2;

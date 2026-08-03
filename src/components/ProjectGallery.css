@@ -100,7 +100,7 @@
 .gallery-counter {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
 
   background: rgba(0, 240, 255, 0.1);
   border: 1px solid var(--neon-cyan);
@@ -214,7 +214,7 @@
 
   .gallery-counter {
     top: 15px;
-    right: 15px;
+    left: 15px; /* ✅ Слева на мобилке */
     padding: 6px 12px;
     font-size: 12px;
   }
@@ -247,7 +247,7 @@
 
   .gallery-counter {
     top: 10px;
-    right: 10px;
+    left: 10px; /* ✅ Слева */
   }
 
   .gallery-dots {

@@ -160,15 +160,16 @@ function FeaturedProjects() {
             >
               <div className="thumbnail">
                 <img src={project.cover_image} alt={project.title} />
-              </div>
 
-              {project.model_url ? (
-                <div className="project-badge project-badge--3d">🎮 3D</div>
-              ) : (
-                <div className="project-badge project-badge--photo">
-                  📷 ФОТО
-                </div>
-              )}
+                {/* ✅ БЭЙДЖ ВНУТРИ .thumbnail */}
+                {project.model_url ? (
+                  <div className="project-badge project-badge--3d">🎮 3D</div>
+                ) : (
+                  <div className="project-badge project-badge--photo">
+                    📷 ФОТО
+                  </div>
+                )}
+              </div>
 
               <div className="card-info">
                 <h3>{project.title}</h3>

@@ -69,6 +69,8 @@
   margin-bottom: 20px;
   letter-spacing: 3px;
 
+  font-family: "Quicksand", sans-serif;
+
   /* Неоновый текст с СТАТИЧНЫМ свечением */
   background: linear-gradient(
     135deg,
@@ -150,6 +152,9 @@
   text-transform: none;
   margin-bottom: 20px;
   line-height: 1.4;
+
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
 }
 
 .hero-subtitle-secondary {
@@ -161,6 +166,9 @@
   margin-bottom: 40px;
   max-width: 700px;
   margin-left: 230px;
+
+  font-family: "Quicksand", sans-serif;
+  font-weight: 400;
 }
 
 .hero-button {

@@ -150,8 +150,21 @@
   border: 2px solid var(--border-color);
   background: var(--bg-tertiary);
   position: relative;
-
   transition: all 0.3s ease;
+}
+
+/* ✅ Затемнение правого верхнего угла для лучшей видимости бэйджа */
+.thumbnail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 60px;
+  background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
 }
 
 .youtube-card:hover .thumbnail {
@@ -688,7 +701,7 @@
 }
 
 .telegram-order-btn {
-  display: inline-block;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -744,6 +757,7 @@
   .telegram-order-btn {
     font-size: 14px;
     padding: 14px 20px;
+    gap: 8px;
   }
 }
 
@@ -757,6 +771,7 @@
   border-radius: 4px;
   letter-spacing: 1px;
   z-index: 2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: badgeFadeIn 0.4s ease;
 }
 
