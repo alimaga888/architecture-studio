@@ -4,6 +4,7 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import Reviews from "../components/Reviews";
+import DocumentationSlider from "../components/DocumentationSlider";
 
 function Home() {
   return (
@@ -12,6 +13,10 @@ function Home() {
         <section id="projects">
           <FeaturedProjects />
         </section>
+      </Reveal>
+
+      <Reveal>
+        <DocumentationSlider />
       </Reveal>
 
       {/* <Reveal>

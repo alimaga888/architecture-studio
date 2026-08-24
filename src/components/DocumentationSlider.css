@@ -1,0 +1,325 @@
+.documentation-section {
+  padding: 120px 20px;
+  background: linear-gradient(
+    180deg,
+    var(--bg-secondary) 0%,
+    var(--bg-primary) 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.documentation-section::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(184, 0, 255, 0.05) 0%,
+    rgba(0, 240, 255, 0.02) 50%,
+    transparent 100%
+  );
+  animation: bgPulse 12s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bgPulse {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, 40px) scale(1.1);
+  }
+}
+
+.documentation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+  font-family: "Quicksand", sans-serif;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 18px;
+  margin-bottom: 60px;
+  letter-spacing: 1px;
+}
+
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  box-shadow:
+    0 0 30px rgba(0, 240, 255, 0.2),
+    inset 0 0 30px rgba(0, 240, 255, 0.05);
+  background: var(--bg-tertiary);
+}
+
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease; /* ✅ Убрал transform — меньше лагов */
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0); /* ✅ Активный слайд на месте */
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+  background: var(--bg-secondary);
+}
+
+/* ✅ НОВЫЙ ЦВЕТ ТЕКСТА (белый с тёмным фоном) */
+.slide-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 30px;
+
+  /* ✅ Тёмный фон вместо полупрозрачного */
+  background: rgba(10, 10, 15, 0.95);
+
+  /* ✅ Яркая граница */
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+
+  /* ✅ Белый текст вместо голубого */
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.5),
+    inset 0 0 10px rgba(0, 240, 255, 0.1);
+
+  /* ✅ Ограничение по ширине */
+  max-width: 90%;
+  text-align: center;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-btn--prev {
+  left: 20px;
+}
+
+.slider-btn--prev:hover {
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+  box-shadow: 0 0 20px rgba(184, 0, 255, 0.5);
+}
+
+.slider-btn--next {
+  right: 20px;
+}
+
+.slider-btn--next:hover {
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+}
+
+/* ✅ СЧЁТЧИК СТРАНИЦ (слева сверху) */
+.slide-counter {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(10, 10, 15, 0.9);
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  z-index: 10;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.3);
+  border: 2px solid var(--neon-cyan);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dot:hover {
+  background: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+  transform: scale(1.2);
+}
+
+/* ✅ АКТИВНАЯ ТОЧКА */
+.dot.active {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.9);
+  transform: scale(1.4);
+  border-color: #ffffff;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+  .documentation-section {
+    padding: 80px 20px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .slider-wrapper {
+    height: 400px;
+  }
+
+  .slider-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .slider-btn--prev {
+    left: 10px;
+  }
+
+  .slider-btn--next {
+    right: 10px;
+  }
+
+  .slide-counter {
+    top: 10px;
+    left: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .slider-dots {
+    bottom: 60px;
+    gap: 8px;
+    padding: 10px 16px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .slide-caption {
+    font-size: 14px;
+    padding: 10px 20px;
+    bottom: 20px;
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-wrapper {
+    height: 300px;
+  }
+
+  .slide img {
+    padding: 10px;
+  }
+
+  .slide-caption {
+    font-size: 12px;
+    padding: 8px 16px;
+    bottom: 15px;
+  }
+
+  .slide-counter {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
