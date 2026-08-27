@@ -21,52 +21,86 @@ function DocumentationSlider() {
     {
       id: 3,
       image: "/docs/placeholder_page-0003.jpg",
-      title: "Общий плай 1-го этажа 1-й дом",
+      title: "Общий план",
     },
     {
       id: 4,
       image: "/docs/placeholder_page-0004.jpg",
-      title: "План подвала; План кровли",
+      title: "План котлована",
     },
     {
       id: 5,
       image: "/docs/placeholder_page-0005.jpg",
-      title: "Фасад 1-4; 4-1; A-E; E-A",
+      title: "План подвала; План дренажа",
     },
     {
       id: 6,
       image: "/docs/placeholder_page-0006.jpg",
-      title: "Разрез 1-1; 2-2",
+      title: "План 1-этажа; План 2-этажа",
     },
     {
       id: 7,
       image: "/docs/placeholder_page-0007.jpg",
-      title: "План 1-го этажа; Фасады 1.1; 1.2 Дом 2",
+      title: "План коммуникаций",
     },
     {
       id: 8,
       image: "/docs/placeholder_page-0008.jpg",
-      title:
-        "План 1-го этажа; Фасады 2.1; 2.2 Летняя кухня. План 1-го этажа; Фасады 3.1; 3.2 Крытая парковка",
+      title: "План кровли",
     },
     {
       id: 9,
       image: "/docs/placeholder_page-0009.jpg",
-      title: "Ведомость дверных и оконных проемов",
+      title: "Фасад 1-4; Д-А",
     },
     {
       id: 10,
       image: "/docs/placeholder_page-0010.jpg",
-      title: "Деталировка фасада 1-4",
+      title: "Фасад А-Д; 4-1",
     },
     {
       id: 11,
       image: "/docs/placeholder_page-0011.jpg",
-      title: "3D модель-1",
+      title: "Разрез 1-1; 2-2",
     },
     {
       id: 12,
       image: "/docs/placeholder_page-0012.jpg",
+      title: "Летняя кухня / Парковка; Беседка",
+    },
+    {
+      id: 13,
+      image: "/docs/placeholder_page-0013.jpg",
+      title: "Принципиальне узлы 1",
+    },
+    {
+      id: 14,
+      image: "/docs/placeholder_page-0014.jpg",
+      title: "Принципиальне узлы 2",
+    },
+    {
+      id: 15,
+      image: "/docs/placeholder_page-0015.jpg",
+      title: "Вентиляционные каналы",
+    },
+    {
+      id: 16,
+      image: "/docs/placeholder_page-0016.jpg",
+      title: "Деталировка фасада 1-4",
+    },
+    {
+      id: 17,
+      image: "/docs/placeholder_page-0017.jpg",
+      title: "Ведомость дверных и оконных проемов",
+    },
+    {
+      id: 18,
+      image: "/docs/placeholder_page-0018.jpg",
+      title: "3D модель-1",
+    },
+    {
+      id: 19,
+      image: "/docs/placeholder_page-0019.jpg",
       title: "3D модель-2",
     },
   ];
