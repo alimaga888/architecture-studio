@@ -236,28 +236,26 @@ function DocumentationSlider() {
 
     if (!slider) return;
 
-    // Полностью забираем управление колёсиком себе
+    // Без Shift не вмешиваемся в обычный скролл страницы
+    if (!e.shiftKey) {
+      return;
+    }
+
+    // Только с Shift забираем колесо себе
     e.preventDefault();
 
     isWheelScrolling.current = true;
 
-    // Используем deltaY для обычного вертикального колеса
-    // и deltaX для горизонтального трекпада
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
 
-    // Коэффициент чувствительности
     slider.scrollLeft += delta * 1.5;
 
     normalizeScroll();
 
-    // Пока пользователь продолжает крутить —
-    // таймер постоянно сбрасывается
     if (wheelTimeout.current) {
       clearTimeout(wheelTimeout.current);
     }
 
-    // Через 150 мс после последнего движения
-    // снова запускаем автоскролл
     wheelTimeout.current = setTimeout(() => {
       isWheelScrolling.current = false;
     }, 150);
@@ -369,7 +367,7 @@ function DocumentationSlider() {
         </div>
 
         <div className="scroll-hint">
-          ← Тяните мышкой или скроллите колесом →
+          ← Тяните мышкой или скроллите, зажав Shift →
         </div>
       </div>
     </section>
