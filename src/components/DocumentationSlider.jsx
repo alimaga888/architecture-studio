@@ -1,11 +1,19 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./DocumentationSlider.css";
-import { div } from "three/tsl";
 
 function DocumentationSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const autoplayRef = useRef(null);
+  const sliderRef = useRef(null);
+  const animationRef = useRef(null);
+
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const startScrollLeft = useRef(0);
+
+  // Автоскролл временно останавливается после ручного скролла
+  const wheelTimeout = useRef(null);
+  const isWheelScrolling = useRef(false);
+
+  const scrollSpeed = 1;
 
   const slides = [
     {
@@ -71,12 +79,12 @@ function DocumentationSlider() {
     {
       id: 13,
       image: "/docs/placeholder_page-0013.jpg",
-      title: "Принципиальне узлы 1",
+      title: "Принципиальные узлы 1",
     },
     {
       id: 14,
       image: "/docs/placeholder_page-0014.jpg",
-      title: "Принципиальне узлы 2",
+      title: "Принципиальные узлы 2",
     },
     {
       id: 15,
@@ -105,84 +113,267 @@ function DocumentationSlider() {
     },
   ];
 
-  const goToNext = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
+  const infiniteSlides = [...slides, ...slides];
 
-  const goToPrev = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
+  // --------------------------------------------------
+  // Нормализация бесконечного скролла
+  // --------------------------------------------------
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
+  const normalizeScroll = () => {
+    const slider = sliderRef.current;
 
-  useEffect(() => {
-    if (!isPaused) {
-      autoplayRef.current = setInterval(() => {
-        goToNext();
-      }, 4000);
+    if (!slider) return;
+
+    const loopWidth = slider.scrollWidth / 2;
+
+    if (slider.scrollLeft <= 0) {
+      slider.scrollLeft += loopWidth;
     }
 
-    return () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
+    if (slider.scrollLeft >= loopWidth) {
+      slider.scrollLeft -= loopWidth;
+    }
+  };
+
+  // --------------------------------------------------
+  // Предварительная загрузка + декодирование
+  // --------------------------------------------------
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const preloadImages = async () => {
+      const promises = slides.map((slide) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+
+          img.src = slide.image;
+
+          if (img.complete) {
+            if (img.decode) {
+              img
+                .decode()
+                .catch(() => {})
+                .finally(resolve);
+            } else {
+              resolve();
+            }
+            return;
+          }
+
+          img.onload = async () => {
+            if (img.decode) {
+              try {
+                await img.decode();
+              } catch (error) {
+                // Изображение всё равно загружено
+              }
+            }
+
+            resolve();
+          };
+
+          img.onerror = resolve;
+        });
+      });
+
+      await Promise.all(promises);
+
+      if (cancelled) return;
+
+      const slider = sliderRef.current;
+
+      if (slider) {
+        slider.scrollLeft = slider.scrollWidth / 2;
       }
     };
-  }, [isPaused, currentSlide]);
+
+    preloadImages();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // --------------------------------------------------
+  // Автоскролл
+  // --------------------------------------------------
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+
+    if (!slider) return;
+
+    slider.scrollLeft = slider.scrollWidth / 2;
+
+    const autoScroll = () => {
+      if (!isDragging.current && !isWheelScrolling.current) {
+        slider.scrollLeft += scrollSpeed;
+
+        normalizeScroll();
+      }
+
+      animationRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    animationRef.current = requestAnimationFrame(autoScroll);
+
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+
+      if (wheelTimeout.current) {
+        clearTimeout(wheelTimeout.current);
+      }
+    };
+  }, []);
+
+  // --------------------------------------------------
+  // Колёсико / горизонтальный скролл
+  // --------------------------------------------------
+
+  const handleWheel = (e) => {
+    const slider = sliderRef.current;
+
+    if (!slider) return;
+
+    // Полностью забираем управление колёсиком себе
+    e.preventDefault();
+
+    isWheelScrolling.current = true;
+
+    // Используем deltaY для обычного вертикального колеса
+    // и deltaX для горизонтального трекпада
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+    // Коэффициент чувствительности
+    slider.scrollLeft += delta * 1.5;
+
+    normalizeScroll();
+
+    // Пока пользователь продолжает крутить —
+    // таймер постоянно сбрасывается
+    if (wheelTimeout.current) {
+      clearTimeout(wheelTimeout.current);
+    }
+
+    // Через 150 мс после последнего движения
+    // снова запускаем автоскролл
+    wheelTimeout.current = setTimeout(() => {
+      isWheelScrolling.current = false;
+    }, 150);
+  };
+
+  // --------------------------------------------------
+  // Начало перетаскивания
+  // --------------------------------------------------
+
+  const handleMouseDown = (e) => {
+    const slider = sliderRef.current;
+
+    if (!slider) return;
+
+    isDragging.current = true;
+
+    startX.current = e.clientX;
+    startScrollLeft.current = slider.scrollLeft;
+
+    slider.style.cursor = "grabbing";
+  };
+
+  // --------------------------------------------------
+  // Перетаскивание
+  // --------------------------------------------------
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+
+    const slider = sliderRef.current;
+
+    if (!slider) return;
+
+    e.preventDefault();
+
+    const x = e.clientX;
+
+    const walk = (x - startX.current) * 2;
+
+    slider.scrollLeft = startScrollLeft.current - walk;
+
+    normalizeScroll();
+
+    if (slider.scrollLeft <= 0 || slider.scrollLeft >= slider.scrollWidth / 2) {
+      startScrollLeft.current = slider.scrollLeft;
+      startX.current = x;
+    }
+  };
+
+  // --------------------------------------------------
+  // Отпускание мыши
+  // --------------------------------------------------
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+
+    if (sliderRef.current) {
+      sliderRef.current.style.cursor = "grab";
+    }
+  };
+
+  // --------------------------------------------------
+  // Мышь вышла за пределы
+  // --------------------------------------------------
+
+  const handleMouseLeave = () => {
+    if (!isDragging.current) return;
+
+    isDragging.current = false;
+
+    if (sliderRef.current) {
+      sliderRef.current.style.cursor = "grab";
+    }
+  };
 
   return (
-    <section
-      className="documentation-section"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
+    <section className="documentation-section">
       <div className="documentation-container">
         <h2 className="section-title">Пример рабочей документации</h2>
+
         <p className="section-subtitle">
           Профессиональные чертежи и визуализации для строительства
         </p>
 
-        <div className="slider-wrapper">
-          <div className="slider-track">
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`slide ${index === currentSlide ? "active" : ""}`}
-                style={{
-                  transform: `translateX(${(index - currentSlide) * 100}%)`,
-                }}
-              >
-                <img src={slide.image} alt={slide.title} />
-                <div className="slide-caption">{slide.title}</div>
+        <div
+          ref={sliderRef}
+          className="cards-slider"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onWheel={handleWheel}
+        >
+          {infiniteSlides.map((slide, index) => (
+            <div key={`${slide.id}-${index}`} className="doc-card">
+              <div className="card-image">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  loading="eager"
+                  decoding="async"
+                  draggable="false"
+                />
               </div>
-            ))}
-          </div>
 
-          <button className="slider-btn slider-btn--prev" onClick={goToPrev}>
-            ←
-          </button>
-          <button className="slider-btn slider-btn--next" onClick={goToNext}>
-            →
-          </button>
+              <div className="card-title">{slide.title}</div>
+            </div>
+          ))}
+        </div>
 
-          <div className="slide-counter">
-            {currentSlide + 1} / {slides.length}
-          </div>
-
-          <div className="slider-dots">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                className={`dot ${index === currentSlide ? "active" : ""}`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Перейти к слайду ${index + 1}`}
-              />
-            ))}
-          </div>
+        <div className="scroll-hint">
+          ← Тяните мышкой или скроллите колесом →
         </div>
       </div>
     </section>
   );
 }
+
 export default DocumentationSlider;

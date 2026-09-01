@@ -39,7 +39,7 @@
 }
 
 .documentation-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -65,261 +65,187 @@
   letter-spacing: 1px;
 }
 
-.slider-wrapper {
-  position: relative;
-  width: 100%;
-  height: 600px;
+/* ==================== КАРТОЧНЫЙ СЛАЙДЕР ==================== */
+
+.cards-slider {
+  display: flex;
+  gap: 30px;
+  padding: 20px 40px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transform: translateZ(0);
+  scroll-behavior: auto; /* Не отдаём браузеру горизонтальную прокрутку */
+  overscroll-behavior-x: none; /* Важно для производительности */
+  will-change: scroll-position;
+}
+.cards-slider::-webkit-scrollbar {
+  display: none;
+}
+.cards-slider:active {
+  cursor: grabbing;
+}
+
+/* ==================== КАРТОЧКА ДОКУМЕНТА ==================== */
+
+.doc-card {
+  flex: 0 0 auto;
+  width: 450px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid var(--border-color);
-  box-shadow:
-    0 0 30px rgba(0, 240, 255, 0.2),
-    inset 0 0 30px rgba(0, 240, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  /* ✅ УПРОЩЁННЫЕ transitions (только нужное) */
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+
+  -webkit-user-drag: none;
+  user-select: none;
+
+  /* ✅ Аппаратное ускорение */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.doc-card:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-8px) translateZ(0); /* ✅ Убран scale */
+}
+
+.card-image {
+  width: 100%;
+  height: 550px;
   background: var(--bg-tertiary);
-}
-
-.slider-track {
+  overflow: hidden;
   position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.6s ease; /* ✅ Убрал transform — меньше лагов */
-  pointer-events: none;
-}
-
-.slide.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(0); /* ✅ Активный слайд на месте */
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 20px;
-  background: var(--bg-secondary);
-}
-
-/* ✅ НОВЫЙ ЦВЕТ ТЕКСТА (белый с тёмным фоном) */
-.slide-caption {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 30px;
-
-  /* ✅ Тёмный фон вместо полупрозрачного */
-  background: rgba(10, 10, 15, 0.95);
-
-  /* ✅ Яркая граница */
-  border: 2px solid var(--neon-cyan);
-  border-radius: 8px;
-
-  /* ✅ Белый текст вместо голубого */
-  color: #ffffff;
-
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 0 20px rgba(0, 240, 255, 0.5),
-    inset 0 0 10px rgba(0, 240, 255, 0.1);
-
-  /* ✅ Ограничение по ширине */
-  max-width: 90%;
-  text-align: center;
-}
-
-.slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 2px solid var(--neon-cyan);
-  color: var(--neon-cyan);
-  border-radius: 8px;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.slider-btn:hover {
-  background: rgba(0, 240, 255, 0.2);
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
-  transform: translateY(-50%) scale(1.1);
+/* ✅ УБРАЛИ ::after градиент (экономия рендера) */
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 8px;
+
+  /* ✅ УПРОЩЁННАЯ transition */
+  transition: transform 0.2s ease;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+  /* ✅ Рендер на GPU */
+  transform: translateZ(0);
 }
 
-.slider-btn--prev {
-  left: 20px;
+.doc-card:hover .card-image img {
+  transform: scale(1.03) translateZ(0);
 }
 
-.slider-btn--prev:hover {
-  border-color: var(--neon-purple);
-  color: var(--neon-purple);
-  box-shadow: 0 0 20px rgba(184, 0, 255, 0.5);
-}
-
-.slider-btn--next {
-  right: 20px;
-}
-
-.slider-btn--next:hover {
-  border-color: var(--neon-pink);
-  color: var(--neon-pink);
-  box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
-}
-
-/* ✅ СЧЁТЧИК СТРАНИЦ (слева сверху) */
-.slide-counter {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: rgba(10, 10, 15, 0.9);
-  border: 2px solid var(--neon-cyan);
-  border-radius: 8px;
+.card-title {
+  padding: 15px;
+  background: rgba(10, 10, 15, 0.95);
   color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
-  z-index: 10;
-}
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  border-top: 1px solid var(--border-color);
 
-.slider-dots {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
+  /* ✅ УПРОЩЁННАЯ transition */
+  transition:
+    color 0.2s ease,
+    border-top-color 0.2s ease;
+
+  min-height: 60px;
   display: flex;
-  gap: 12px;
-  z-index: 10;
-  padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(0, 240, 255, 0.3);
-  border: 2px solid var(--neon-cyan);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
+.doc-card:hover .card-title {
+  color: var(--neon-cyan);
+  border-top-color: var(--neon-cyan);
+  /* ✅ УБРАЛИ text-shadow и градиент фона */
 }
 
-.dot:hover {
-  background: rgba(0, 240, 255, 0.6);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
-  transform: scale(1.2);
+/* ==================== ПОДСКАЗКА ==================== */
+
+.scroll-hint {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  letter-spacing: 1px;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-/* ✅ АКТИВНАЯ ТОЧКА */
-.dot.active {
-  background: var(--neon-cyan);
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.9);
-  transform: scale(1.4);
-  border-color: #ffffff;
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 1200px) {
+  .doc-card {
+    width: 400px;
+  }
+  .card-image {
+    height: 500px;
+  }
+}
 
 @media (max-width: 768px) {
   .documentation-section {
     padding: 80px 20px;
   }
-
   .section-title {
     font-size: 32px;
   }
-
-  .section-subtitle {
-    font-size: 16px;
-    margin-bottom: 40px;
+  .cards-slider {
+    gap: 20px;
+    padding: 15px 20px;
   }
-
-  .slider-wrapper {
-    height: 400px;
+  .doc-card {
+    width: 320px;
   }
-
-  .slider-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+  .card-image {
+    height: 420px;
   }
-
-  .slider-btn--prev {
-    left: 10px;
-  }
-
-  .slider-btn--next {
-    right: 10px;
-  }
-
-  .slide-counter {
-    top: 10px;
-    left: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .slider-dots {
-    bottom: 60px;
-    gap: 8px;
-    padding: 10px 16px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-  }
-
-  .slide-caption {
-    font-size: 14px;
-    padding: 10px 20px;
-    bottom: 20px;
-    max-width: 85%;
+  .card-title {
+    font-size: 13px;
+    padding: 12px;
+    min-height: 55px;
   }
 }
 
 @media (max-width: 480px) {
-  .slider-wrapper {
-    height: 300px;
+  .doc-card {
+    width: 260px;
   }
-
-  .slide img {
+  .card-image {
+    height: 350px;
+  }
+  .card-title {
+    font-size: 12px;
     padding: 10px;
-  }
-
-  .slide-caption {
-    font-size: 12px;
-    padding: 8px 16px;
-    bottom: 15px;
-  }
-
-  .slide-counter {
-    font-size: 12px;
-    padding: 6px 12px;
+    min-height: 50px;
   }
 }
