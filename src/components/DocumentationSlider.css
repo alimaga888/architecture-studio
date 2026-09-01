@@ -93,7 +93,7 @@
 
 .doc-card {
   flex: 0 0 auto;
-  width: 450px;
+  width: 550px;
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   border-radius: 12px;
@@ -120,7 +120,7 @@
 
 .card-image {
   width: 100%;
-  height: 550px;
+  height: auto;
   background: var(--bg-tertiary);
   overflow: hidden;
   position: relative;
@@ -133,8 +133,8 @@
 
 .card-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   padding: 8px;
 
   /* ✅ УПРОЩЁННАЯ transition */
@@ -208,7 +208,7 @@
     width: 400px;
   }
   .card-image {
-    height: 500px;
+    height: auto;
   }
 }
 
@@ -227,7 +227,7 @@
     width: 320px;
   }
   .card-image {
-    height: 420px;
+    height: auto;
   }
   .card-title {
     font-size: 13px;
@@ -241,7 +241,7 @@
     width: 260px;
   }
   .card-image {
-    height: 350px;
+    height: auto;
   }
   .card-title {
     font-size: 12px;
