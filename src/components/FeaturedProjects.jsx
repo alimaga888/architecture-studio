@@ -14,8 +14,8 @@ function FeaturedProjects() {
   const [types, setTypes] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [searchTerm, setSearchTeam] = useState("");
-  const [bedroomsFilter, setBedroomsFilter] = useState("");
-  const [locationFilter, setlocationFilter] = useState("");
+  const [floorsFilter, setFloorsFilter] = useState("");
+  const [areaFilter, setAreaFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [orderProject, setOrderProject] = useState(null);
   const [showGallery, setShowGallery] = useState(false);
@@ -61,20 +61,38 @@ function FeaturedProjects() {
   }, []);
 
   const filteredProjects = projects.filter((project) => {
+    // Поиск по названию
     const matchesTitle = project.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-    const matchesBedrooms =
-      bedroomsFilter === "" || project.bedrooms === Number(bedroomsFilter);
+    // Фильтр по этажности
+    const matchesFloors =
+      floorsFilter === "" || Number(project.floors) === Number(floorsFilter);
 
-    const matchesLocation = project.location
-      .toLowerCase()
-      .includes(locationFilter.toLowerCase());
+    // Фильтр по площади
+    let matchesArea = true;
 
+    if (areaFilter === "under100") {
+      matchesArea = Number(project.area) < 100;
+    }
+
+    if (areaFilter === "100-150") {
+      matchesArea = Number(project.area) >= 100 && Number(project.area) <= 150;
+    }
+
+    if (areaFilter === "150-200") {
+      matchesArea = Number(project.area) > 150 && Number(project.area) <= 200;
+    }
+
+    if (areaFilter === "over200") {
+      matchesArea = Number(project.area) > 200;
+    }
+
+    // Фильтр по типу проекта
     const matchesType = typeFilter === "" || project.type_id === typeFilter;
 
-    return matchesTitle && matchesBedrooms && matchesLocation && matchesType;
+    return matchesTitle && matchesFloors && matchesArea && matchesType;
   });
 
   const galleryImages = selectedProject?.gallery_images
@@ -111,6 +129,7 @@ function FeaturedProjects() {
           )}
         </div>
         <div className="filters">
+          {/* Поиск по названию */}
           <input
             type="text"
             placeholder="Поиск по названию..."
@@ -118,35 +137,46 @@ function FeaturedProjects() {
             onChange={(e) => setSearchTeam(e.target.value)}
           />
 
+          {/* Этажность */}
+          <select
+            value={floorsFilter}
+            onChange={(e) => setFloorsFilter(e.target.value)}
+            className="neon-select"
+          >
+            <option value="">Этажность</option>
+            <option value="1">1 этаж</option>
+            <option value="2">2 этажа</option>
+            <option value="3">3 этажа</option>
+            <option value="4">4 этажа</option>
+          </select>
+
+          {/* Площадь */}
+          <select
+            value={areaFilter}
+            onChange={(e) => setAreaFilter(e.target.value)}
+            className="neon-select"
+          >
+            <option value="">Площадь</option>
+            <option value="under100">До 100 м²</option>
+            <option value="100-150">100–150 м²</option>
+            <option value="150-200">150–200 м²</option>
+            <option value="over200">От 200 м²</option>
+          </select>
+
+          {/* Тип проекта */}
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
             className="neon-select"
           >
             <option value="">Все типы</option>
+
             {types.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.name}
               </option>
             ))}
           </select>
-          {/* <select
-            value={bedroomsFilter}
-            onChange={(e) => setBedroomsFilter(e.target.value)}
-          >
-            <option value="">Спальни</option>
-            <option value="">1 спальня</option>
-            <option value="">2 спальни</option>
-            <option value="">3 спальни</option>
-            <option value="">4 спальни</option>
-          </select> */}
-
-          <input
-            type="text"
-            placeholder="Локация..."
-            value={locationFilter}
-            onChange={(e) => setlocationFilter(e.target.value)}
-          />
         </div>
         <div className="youtube-grid">
           {filteredProjects.map((project) => (
